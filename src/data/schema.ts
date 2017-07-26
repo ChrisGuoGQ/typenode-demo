@@ -5,8 +5,18 @@ import {
 import mocks from './mocks'
 
 const typeDefs = `
+type Author {
+  firstName: String
+  lastName: String
+  posts: [Post]
+}
+type Post {
+  title: String
+  text: String
+  author: Author
+}
 type Query {
-  testString: String
+  author(firstName: String, lastName: String): Author
 }
 `;
 
