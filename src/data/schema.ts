@@ -1,8 +1,9 @@
 import {
-  makeExecutableSchema,
   addMockFunctionsToSchema,
+  makeExecutableSchema,
 } from 'graphql-tools';
-import mocks from './mocks'
+import mocks from './mocks';
+import resolvers from './resolvers';
 
 const typeDefs = `
 type Author {
@@ -15,12 +16,21 @@ type Post {
   text: String
   author: Author
 }
+type Link {
+  id: ID!
+  url: String!
+  description: String!
+}
 type Query {
   author(firstName: String, lastName: String): Author
+  allLinks: [Link!]!
+}
+type Mutation {
+  createLink(url: String!, description: String!): Link
 }
 `;
 
-const schema = makeExecutableSchema({ typeDefs });
+const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 addMockFunctionsToSchema({ schema, mocks });
 
